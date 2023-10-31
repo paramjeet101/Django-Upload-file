@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #upload_form input[type=file]{
+        display:none;
+      }
+      
+      #fire-upload{
+        cursor:pointer;
+       
+      }
+      
+      ._input_box{
+        border:1px solid grey;
+        width:35%;
+        padding:10px 12px;
+        border-radius:25px;
+      }
+      ._input_box1{
+      
+        width:35%;
+        padding:10px 12px;
+       
+      }
+      ._input_box1 progress{ 
+      float:right;
+        color:green;
+      }
+      #upload_form i{
+        float:right;
+            font-size: 24px;
+          margin-top: -3px;
+        cursor:pointer;
+        
+      }
+      
+      #loaded_n_total{
+        display:none;
+      }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center pt-5">
+                <div class="" style="background:lightpink;padding:40px 40px 40px 40px;border-radius:5px;">
+                    <h3 class="text-center text-danger pb-4 pt-2">Upload Files</h3>
+                    <form id="file-upload-form" class="pb-3" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="file" id="file-input" required>
+                        <button type="submit" class="text-danger" id="progress-bar-trigger" style="border-radius:5px;background:lightblue;border-color:lightblue">Upload</button>
+                    </form>
+                    <div id="progress-wrapper">
+                         {% comment %} <button id="progress-bar-trigger">Run</button> {% endcomment %}
+                        <div id="progress-bar" style="background-color: blue; width: 0%;">&nbsp;</div>
+                        <div id="progress-bar-message2" style="display:none;">Successfully Updated.</div>
+                    </div>    
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+     $(document).ready(function () {
+        $('#progress-bar-trigger').click(function () {
+            var fileInput = $('#file-input')[0];
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+                var formData = new FormData();
+                formData.append('file', file);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'upload' %}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        
+                        xhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                var percentComplete = (e.loaded / e.total) * 100;
+                                $('#progress-bar').width(percentComplete + '%');
+
+                            }
+                        }, false);
+                        
+                        return xhr;
+                    },
+                    success: function (data) {
+                        xhr.send( ( s.hasContent && s.data ) || null );
+                        
+                        console.log('Upload complete:', data);
+                       
+                    }
+                });
+            }
+        });
+    }); 
+
+
+    {% comment %} function updateProgress(progressBarElement, progressBarMessageElement, progress) {
+        progressBarElement.style.width = progress.percent + "%";
+        progressBarMessageElement.innerHTML = progress.current + ' of ' + progress.total + ' processed.';
+      }
+      
+      var trigger = document.getElementById('progress-bar-trigger');
+      trigger.addEventListener('click', function(e) {
+        var gh=document.getElementById("file-input")
+       
+            var bar = document.getElementById("progress-bar");
+            var barMessage = document.getElementById("progress-bar-message");
+            for (var i = 0; i < 11; i++) {
+                if (gh['file'] == ['file'] ){
+                setTimeout(updateProgress, 1000 * i, bar, barMessage, {
+                    percent: 10 * i,
+                    current: 10 * i,
+                    total: 100
+                })
+            }
+            }
+        }) {% endcomment %}
+
+</script>
+{% endblock %}

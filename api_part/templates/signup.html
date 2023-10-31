@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+    <style>
+      
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:  linear-gradient(90deg, #FB37FF, #18B2DE);
+    
+}
+.wrapper {
+    width: 420px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 02);
+    border-radius: 10px;
+    padding: 30px 40px;
+    color: #fff;
+  }
+  
+  input {
+    margin: 5px;
+    width: 100%;
+    height: 50px;
+    background: none;
+    outline: none;
+    border: 2px solid;
+    border-radius: 40px;
+    padding: 20px 45px 20px 20px;
+    font-size: 16px;
+    color: #fff;
+  }
+  
+  .btn{
+    margin-top: 5px;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    outline: none;
+    border : solid #fff;
+    border-radius: 40px ;
+    font-size: 16px;
+    color: #000;
+    
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    text-align: center;
+    margin-top: 10px;
+  }
+  ::placeholder {
+    color: #fff
+  }
+  
+    </style>
+    <div class="main">
+        <div class="wrapper">
+            <form action="" method="post">
+              {% csrf_token %}
+                <h1>Sign up</h1>
+                {% comment %} <div class="input">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div> {% endcomment %}
+                <div class="input">
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                {% comment %} <div class="input">
+                    <input type="text" name="email" placeholder="Email" required>
+                </div> {% endcomment %}
+                <div class="input">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+            <button type="submit" class="btn">Sign up</button>
+            <p> Already have an account?
+            <a href="{% url 'login_user' %}" class="text-danger">Login</a>
+            </p>
+            </form>
+        </div>
+    </div>
+</html>
+{% endblock %}

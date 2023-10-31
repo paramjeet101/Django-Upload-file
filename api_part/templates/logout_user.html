@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="padding:30px 10px 30px 10px;background:red;">
+                <h3 class="pt-4 ps-3">You have been logout.... <span><a style="text-decoration:none;font-size:20px;" href="{% url 'login_user' %}">Login again</a></span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
